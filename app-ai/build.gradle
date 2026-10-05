@@ -4,15 +4,15 @@ plugins {
 }
 
 android {
-    namespace 'com.waautoresponder.ai'
+    namespace 'com.waautoresponder.gemini'
     compileSdk 36
 
     defaultConfig {
-        applicationId "com.waautoresponder.offline"
+        applicationId "com.waautoresponder.gemini"
         minSdk 26
         targetSdk 36
-        versionCode 3
-        versionName "1.2"
+        versionCode 1
+        versionName "2.0"
     }
 
     buildTypes {

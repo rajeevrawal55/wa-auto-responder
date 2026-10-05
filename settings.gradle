@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "WA-AutoResponder"
 include(":app")
+include(":app-ai")

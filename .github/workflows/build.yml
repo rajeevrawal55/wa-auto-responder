@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Android APKs
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
 
     steps:
       - uses: actions/checkout@v4
@@ -19,17 +19,32 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle 8.2
+      - name: Setup Gradle 8.11.1
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.2'
+          gradle-version: '8.11.1'
 
-      - name: Build debug APK
-        run: gradle :app:assembleDebug --stacktrace
+      - name: Install Android 16 SDK
+        run: yes | sdkmanager "platforms;android-36" "build-tools;36.0.0"
 
-      - name: Upload APK
+      - name: Build both APKs
+        run: gradle :app:assembleDebug :app-ai:assembleDebug --stacktrace
+
+      - name: Rename APKs
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk WA-AutoResponder-Offline-v1.2.apk
+          cp app-ai/build/outputs/apk/debug/app-ai-debug.apk WA-AutoResponder-GeminiAI-v2.0.apk
+
+      - name: Upload Offline APK
         uses: actions/upload-artifact@v4
         with:
-          name: WA-AutoResponder-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: WA-AutoResponder-Offline-v1.2
+          path: WA-AutoResponder-Offline-v1.2.apk
+          if-no-files-found: error
+
+      - name: Upload Gemini AI APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: WA-AutoResponder-GeminiAI-v2.0
+          path: WA-AutoResponder-GeminiAI-v2.0.apk
           if-no-files-found: error
