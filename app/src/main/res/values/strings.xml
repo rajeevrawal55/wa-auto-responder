@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WA AutoResponder</string>
-</resources>\n
+    <string name="service_name">WA AutoResponder Service</string>
+</resources>
